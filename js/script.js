@@ -1,6 +1,6 @@
 let ports;
 
-fetch('data/attributed_ports.geojson')
+fetch('Geog472_Lab3/data/attributed_ports.geojson')
 .then(response => response.json())
 .then(data => {
     ports = data;
