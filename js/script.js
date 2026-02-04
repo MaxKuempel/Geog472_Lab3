@@ -1,5 +1,6 @@
 let ports;
 
+function FetchPorts(){
 fetch('data/attributed_ports.geojson')
 .then(response => response.json())
 .then(data => {
@@ -9,7 +10,7 @@ fetch('data/attributed_ports.geojson')
     
 })
 .catch(error => console.error('Error:', error));
-
+}
 
 
 /* Example from Leaflet Quick Start Guide*/
@@ -46,5 +47,6 @@ for (let i = 0; i < ports.features.length; i++){
 }
 
 window.onload = function(){
+FetchPorts();
 DisplayPorts();
 }
