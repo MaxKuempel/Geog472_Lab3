@@ -38,7 +38,7 @@ for (let i = 0; i < ports.features.length; i++){
         {
         color: 'black',
         fillColor: 'rgba(0, 214, 252, 1)',
-        fillOpacity: 0.7,    radius: (ports.features[i].properties.outflows) / (400 * PortMap.getzoom())
+        fillOpacity: 0.7,    radius: (ports.features[i].properties.outflows) / (400 * PortMap.getZoom())
         }).addTo(PortMap).bindPopup(
             ports.features[i].properties.Name + ", " + ports.features[i].properties.Country
         );
