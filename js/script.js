@@ -49,4 +49,5 @@ for (let i = 0; i < ports.features.length; i++){
 window.onload = function(){
 FetchPorts();
 DisplayPorts();
+console.log(PortMap.getZoom());
 }
