@@ -18,16 +18,27 @@
     </head>
     
     <body>
-        <!--put your initial page content here-->
-        data from https://datacatalog.worldbank.org/search/dataset/0038118/global-international-ports
-        JSON link: https://datacatalogfiles.worldbank.org/ddh-published/0038118/1/DR0046414/attributed_ports.geojson 
-        <!--you can also use this space for internal scripts;
-        place these within <script> tags-->
-
-        <!--put your external script links here-->
+      
         <script type="text/javascript" src="lib/leaflet/dist/leaflet-src.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7/turf.min.js"></script> <!-- Gets Turf.js, it is very nice to use-->
         <script type="text/javascript" src="js/script.js" defer></script>
-        
-        <div id ="PortMap" onload="DisplayPorts()">  map goes here </div>
+        <div id = "MapContainer"> 
+            <div class = "map"> 
+                <h1>Port outflows, Twenty-Foot equivalent units (TEU)</h1>
+                <h2>World Bank, 2020</h2>
+                <p> data from <a href = //datacatalog.worldbank.org/search/dataset/0038118/global-international-ports>worldbank.org </a></p>
+                <p> A Twenty-Foot equivalent unit is a unit used for logistics, that represents 
+                how many goods can fit in a standard 20ft cargo container
+                </p>
+                <div id ="PortMap" onload="DisplayPorts()">  map goes here </div>
+            </div>
+            <div class = "map"> 
+                <h1>Port Outflows by Country (TEU). </h1>
+                <h2>World Bank, 2020</h2>
+                <div>    </div>
+                <p> country borders from <a href = https://datahub.io/core/geo-countries#countries> Core Datasets </a></p>
+                <div id = "Choropleth">  second map</div>
+            </div>
+        </div>
     </body>
 </html>
