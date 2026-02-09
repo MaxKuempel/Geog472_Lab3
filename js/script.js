@@ -149,11 +149,12 @@ legend.onAdd = function (Choropleth) {
         outflows = [0,50000, 1000000, 5000000, 10000000, 30000000, 50000000, 70000000, 90000000],
         labels = [];
 
+    div.innerHTML += '<strong>Legend </strong> <br>'
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < outflows.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(outflows[i] + 1) + '"></i> ' +
-            outflows[i] + (outflows[i + 1] ? '&ndash;' + outflows[i + 1] + '<br>' : '+'); //same choropleth tutorial https://leafletjs.com/examples/choropleth/
+            outflows[i] + (outflows[i + 1] ? '&ndash;' + outflows[i + 1] + " TEU"+'<br>' : '+ TEU'); //same choropleth tutorial https://leafletjs.com/examples/choropleth/
     }
 
     return div;
