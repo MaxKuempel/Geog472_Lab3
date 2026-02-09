@@ -1,26 +1,24 @@
 let ports;
-let portsloaded = 0
 
 function FetchPorts(){
 fetch('data/attributed_ports.geojson')
 .then(response => response.json())
 .then(data => {
-    ports = data;
-    console.log("Ports Fetched!");
-    console.log(data);
-    portsloaded = 1;
-    DisplayPorts(data);
+    ports = data; //assing to var, also used for debugging
+    console.log("Ports Fetched!"); //debugging
+    console.log(data); //make sure data exists
+    DisplayPorts(data); //load map, once data ready
 })
-.catch(error => console.error('Error:', error));
+.catch(error => console.error('Error:', error)); //catch error
 }
 
 
-var PortMap = L.map('PortMap').setView([0, 0], 2);
+var PortMap = L.map('PortMap').setView([0, 0], 2); //create view, zoom level 2
 
 
 
 //add tile layer
-var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', { //baselayer
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
 }).addTo(PortMap);
@@ -45,7 +43,7 @@ for (let i = 0; i < ports.features.length; i++){
         fillOpacity: 0.7,    radius: (ports.features[i].properties.outflows) / (400) // base radius on outflow
         }).addTo(PortMap).bindPopup( // popup
             ports.features[i].properties.Name + ", " + ports.features[i].properties.Country +
-            " Outflows(TEU): " + Math.round(ports.features[i].properties.outflows)
+            " Outflows(TEU): " + Math.round(ports.features[i].properties.outflows) //create labels, janky method
         );
 
 }
@@ -55,12 +53,12 @@ for (let i = 0; i < ports.features.length; i++){
 
 // Map 2: Choropleth
 
-var Choropleth = L.map('Choropleth').setView([0, 0], 2);
+var Choropleth = L.map('Choropleth').setView([0, 0], 2); //set view
 
 var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
 	maxZoom: 19,
 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
-}).addTo(Choropleth);
+}).addTo(Choropleth); //base layer
 
 
 
@@ -68,18 +66,18 @@ var OpenStreetMap_HOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{
 
 let countries;
 function FetchCountries(){
-fetch('https://r2.datahub.io/clvyjaryy0000la0cxieg4o8o/main/raw/data/countries.geojson')
-.then(response => response.json())
+fetch('https://r2.datahub.io/clvyjaryy0000la0cxieg4o8o/main/raw/data/countries.geojson') //fetch from online json
+.then(response => response.json()) //make sure it json
 .then(data => {
-    countries = data;
-    console.log("Countries Fetched!");
-    console.log(data);
-    DisplayCountries(data);
+    countries = data; //assing to var
+    console.log("Countries Fetched!"); //log it!
+    console.log(data); //prove data exists 
+    DisplayCountries(data); //display, once loaded
     
 })
 
 .catch(error => console.error('Error:', error));
-console.log(countries);
+console.log(countries); // also testing it exists 
 }
 
 
@@ -104,9 +102,9 @@ function PortsSummary(ports, countries){
 }
 
 //define style for display
-var maxOutflow = 160320850
+var maxOutflow = 160320850 //plan was to make color scheme dynamically generate, but not enough time
 var breaks = 7
-function getColor(d) {
+function getColor(d) { //Taken from choropleth tutorial: https://leafletjs.com/examples/choropleth/
     return d > 90000000 ? '#800026' :
            d > 70000000  ? '#BD0026' :
            d > 50000000  ? '#E31A1C' :
@@ -115,12 +113,12 @@ function getColor(d) {
            d > 5000000   ? '#FEB24C' :
            d > 1000000  ? '#FED976' :
            d > 1        ? '#FFEDA0':
-                  '#e2e2e2';
+                  '#e2e2e2'; //no data
 }
 
 
 function ChoroplethPopups(feature,layer){ //technique stolen from: https://webgis.pub/leaflet-geojson.html
-layer.bindPopup(feature.properties.name +" Outflow(TEU): " + Math.round(feature.properties.outflow_sum))
+layer.bindPopup(feature.properties.name +" Outflow(TEU): " + Math.round(feature.properties.outflow_sum)) //clean up values
 } // works much cleaner than for loops
 
 function StyleChoropleth(feature) {
@@ -143,7 +141,7 @@ onEachFeature: ChoroplethPopups
 }
 
 //legend//
-var legend = L.control({position: 'bottomright'});
+var legend = L.control({position: 'bottomright'}); //also taken from choropleth tutorial https://leafletjs.com/examples/choropleth/
 
 legend.onAdd = function (Choropleth) {
 
@@ -155,7 +153,7 @@ legend.onAdd = function (Choropleth) {
     for (var i = 0; i < outflows.length; i++) {
         div.innerHTML +=
             '<i style="background:' + getColor(outflows[i] + 1) + '"></i> ' +
-            outflows[i] + (outflows[i + 1] ? '&ndash;' + outflows[i + 1] + '<br>' : '+');
+            outflows[i] + (outflows[i + 1] ? '&ndash;' + outflows[i + 1] + '<br>' : '+'); //same choropleth tutorial https://leafletjs.com/examples/choropleth/
     }
 
     return div;
